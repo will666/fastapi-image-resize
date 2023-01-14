@@ -11,7 +11,7 @@ app = FastAPI()
 def read_root() -> dict:
     """Ping the API."""
 
-    return {"ping": "pong"}
+    return {"ping": "OK"}
 
 
 @app.get("/api/v1/resize/{size}{image_url:path}")
@@ -21,6 +21,10 @@ def resize_img(size: str, image_url: str) -> StreamingResponse:
     Args:
         size (str): The size to resize the image to.
         image_url (str): The URL of the image.
+        possible values:
+            /api/v1/resize/100x100//https://example.com/image.jpg
+            /api/v1/resize/x100//https://example.com/image.jpg
+            /api/v1/resize/100x//https://example.com/image.jpg
 
     Returns:
         StreamingResponse: The resized image."""
