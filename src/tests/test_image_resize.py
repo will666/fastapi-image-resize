@@ -21,10 +21,6 @@ def test_get_aspect_ratio() -> None:
 
 def test_resize_image():
     """Test the resize_image function."""
-    # assert resize_image(
-    #     url="https://www.w3.org/People/mimasa/test/imgformat/img/w3c_home.jpg", size=(100, 100))
-    # assert resize_image(
-    #     url="https://www.w3.org/People/mimasa/test/imgformat/img/w3c_home.png", size=(100, 100))
     assert resize_image(
         url="https://www.w3.org/People/mimasa/test/imgformat/img/w3c_home.gif", size=(100, 100))
     with pytest.raises(ValueError):
@@ -38,12 +34,9 @@ def test_resize_image():
     with pytest.raises(TypeError):
         resize_image(
             url="https://www.w3.org/People/mimasa/test/imgformat/img/w3c_home.jpg", size=("xxx", "ddd"))
-    with pytest.raises(ValueError):
-        resize_image(url="https://i.imgur.com/1.jpg", size=(100, 100, 100))
-    with pytest.raises(ValueError):
-        resize_image(url="https://i.imgur.com/1.jpg", size=(100, 100, 100))
-    with pytest.raises(ValueError):
-        resize_image(url="https://i.imgur.com/1.jpg", size=(100, 100, 100))
+    with pytest.raises(TypeError):
+        resize_image(
+            url="https://www.w3.org/People/mimasa/test/imgformat/img/w3c_home.jpg", size=(100, 100, 100))
     with pytest.raises(TypeError):
         resize_image(url=100, size=(100, 100))
     with pytest.raises(TypeError):
