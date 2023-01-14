@@ -3,6 +3,21 @@ import colorlog
 from src.utils.constants import LOG_PATH, LOG_CLEAR
 
 
+def level(testing_mode: bool) -> int:
+    if testing_mode:
+        return logging.DEBUG
+    return logging.INFO
+
+
+def log_write_mode(log_clear: str = LOG_CLEAR):
+    if log_clear == "True":
+        return "w"
+    elif log_clear == "False":
+        return "a"
+    else:
+        raise ValueError("LOG_CLEAR must be True or False")
+
+
 def init_logger(*, dunder_name: str, testing_mode: bool) -> logging.Logger:
     log_format = (
         "%(asctime)s - "
@@ -18,17 +33,9 @@ def init_logger(*, dunder_name: str, testing_mode: bool) -> logging.Logger:
     colorlog.basicConfig(format=colorlog_format)
     logger = logging.getLogger(dunder_name)
 
-    if testing_mode:
-        logger.setLevel(logging.DEBUG)
-    else:
-        logger.setLevel(logging.INFO)
+    logger.setLevel(level(testing_mode))
 
-    if LOG_CLEAR == "True":
-        mode = "w"
-    elif LOG_CLEAR == "False":
-        mode = "a"
-    else:
-        raise ValueError("LOG_CLEAR must be True or False")
+    mode = log_write_mode()
 
     fh = logging.FileHandler(
         filename=f"{LOG_PATH}/app.log", mode=mode, encoding="utf-8")
