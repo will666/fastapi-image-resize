@@ -15,6 +15,9 @@ pydantic = "*"
 [dev-packages]
 pytest-cov = "*"
 autopep8 = "*"
+black = "*"
+pre-commit = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.11"
