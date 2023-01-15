@@ -3,19 +3,20 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from src.helpers import size_parse, extract_image_format, clean_image_url
 from src.image_resize import resize_image
+import asyncio
 
 app = FastAPI()
 
 
 @app.get("/")
-def read_root() -> dict:
+def read_root() -> dict[str, str]:
     """Ping the API."""
 
     return {"ping": "OK"}
 
 
 @app.get("/api/v1/resize/{size}{image_url:path}")
-def resize_img(size: str, image_url: str) -> StreamingResponse:
+async def resize_img(size: str, image_url: str) -> StreamingResponse:
     """Resize an image from a URL to a given size.
 
     Args:
@@ -27,8 +28,12 @@ def resize_img(size: str, image_url: str) -> StreamingResponse:
             /api/v1/resize/100x//https://example.com/image.jpg
 
     Returns:
-        StreamingResponse: The resized image."""
+        Async StreamingResponse: The resized image."""
 
+    return await asyncio.to_thread(handle_request, size=size, image_url=image_url)
+
+
+def handle_request(*, size: str, image_url: str) -> StreamingResponse:
     parsed_size = size_parse(size=size)
     cleaned_url = clean_image_url(image_url=image_url)
     img_format = extract_image_format(image_url=cleaned_url)
