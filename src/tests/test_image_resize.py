@@ -1,7 +1,7 @@
 # type: ignore
 
 import pytest
-from src.image_resize import get_aspect_ratio, resize_image
+from src.image_resize import get_aspect_ratio, resize_image, fetch_image
 
 
 def test_get_aspect_ratio() -> None:
@@ -17,6 +17,14 @@ def test_get_aspect_ratio() -> None:
         get_aspect_ratio(size=(100, 100), img_size=("xxx", "ddd"))
     with pytest.raises(TypeError):
         get_aspect_ratio(size=[100, 100], img_size=(100, 100))
+
+
+def test_fetch_image() -> None:
+    """Test the fetch_image function."""
+    assert fetch_image(
+        url="https://www.w3.org/People/mimasa/test/imgformat/img/w3c_home.jpg")
+    with pytest.raises(ValueError):
+        fetch_image(url="https://i.imgur.com/1.jpg")
 
 
 def test_resize_image():

@@ -64,14 +64,9 @@ def resize_image(*, url: str, size: tuple[int, int]) -> Image.Image:
         logger.error(f"Invalid size, wrong type: {size}")
         raise TypeError("Wrong type. A tuple of integers is required.")
 
-    response = request("GET", url)
-    if response.status_code != 200:
-        logger.error(f"Invalid response code: {response.status_code}")
-        raise ValueError("Invalid response code!")
+    response = fetch_image(url=url)
 
-    logger.debug(f"Response status code: {response.status_code}")
-
-    image = Image.open(BytesIO(response.content))
+    image = Image.open(BytesIO(response))
     aspect_ratio = get_aspect_ratio(
         size=size, img_size=(int(image.size[0]), int(image.size[1])))
 
@@ -80,3 +75,15 @@ def resize_image(*, url: str, size: tuple[int, int]) -> Image.Image:
     image = image.resize(aspect_ratio, Image.NEAREST)
 
     return image
+
+
+def fetch_image(*, url: str) -> bytes:
+    """Fetch an image from a URL."""
+
+    response = request("GET", url)
+    if response.status_code != 200:
+        logger.error(f"Invalid response code: {response.status_code}")
+        raise ValueError("Invalid response code!")
+    logger.debug(f"Response status code: {response.status_code}")
+
+    return response.content
