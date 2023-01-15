@@ -29,5 +29,6 @@ def testing_mode(log_level: str) -> bool:
 
 
 create_log_path()
-logger = init_logger(dunder_name=__name__,
-                     testing_mode=testing_mode(LOG_LEVEL))
+logger = init_logger(
+    dunder_name=__name__, testing_mode=testing_mode(LOG_LEVEL)
+)

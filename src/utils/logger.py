@@ -38,21 +38,24 @@ def init_logger(*, dunder_name: str, testing_mode: bool) -> logging.Logger:
     mode = log_write_mode()
 
     fh = logging.FileHandler(
-        filename=f"{LOG_PATH}/app.log", mode=mode, encoding="utf-8")
+        filename=f"{LOG_PATH}/app.log", mode=mode, encoding="utf-8"
+    )
     fh.setLevel(logging.DEBUG)
     formatter = logging.Formatter(log_format)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
 
     fh = logging.FileHandler(
-        filename=f"{LOG_PATH}/app.warning.log", mode=mode, encoding="utf-8")
+        filename=f"{LOG_PATH}/app.warning.log", mode=mode, encoding="utf-8"
+    )
     fh.setLevel(logging.WARNING)
     formatter = logging.Formatter(log_format)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
 
     fh = logging.FileHandler(
-        filename=f"{LOG_PATH}/app.error.log", mode=mode, encoding="utf-8")
+        filename=f"{LOG_PATH}/app.error.log", mode=mode, encoding="utf-8"
+    )
     fh.setLevel(logging.ERROR)
     formatter = logging.Formatter(log_format)
     fh.setFormatter(formatter)

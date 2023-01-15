@@ -4,7 +4,9 @@ from io import BytesIO
 from src.utils.init import logger
 
 
-def get_aspect_ratio(*, size: tuple[int, int], img_size: tuple[int, int]) -> tuple[int, int]:
+def get_aspect_ratio(
+    *, size: tuple[int, int], img_size: tuple[int, int]
+) -> tuple[int, int]:
     """Compute the aspect ratio of an image.
 
     Args:
@@ -68,7 +70,8 @@ def resize_image(*, url: str, size: tuple[int, int]) -> Image.Image:
 
     image = Image.open(BytesIO(response))
     aspect_ratio = get_aspect_ratio(
-        size=size, img_size=(int(image.size[0]), int(image.size[1])))
+        size=size, img_size=(int(image.size[0]), int(image.size[1]))
+    )
 
     logger.debug(f"Aspect ratio: {aspect_ratio}")
 

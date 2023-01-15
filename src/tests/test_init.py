@@ -6,8 +6,7 @@ import src.utils.init as init
 import string
 import random
 
-rs = ''.join(random.choices(string.ascii_uppercase +
-                            string.digits, k=7))
+rs = "".join(random.choices(string.ascii_uppercase + string.digits, k=7))
 
 
 @mock.patch.dict(os.environ, {"LOG_PATH": "logs"})
